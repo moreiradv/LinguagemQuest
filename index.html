@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Linguagem Quest - Dia da Linguagem JOPS</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <audio id="menu-music" src="assets/audio/musicas/menu.mp3" preload="auto" autoplay loop></audio>
+
+  <div class="particles" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+  <div class="retro-grid" aria-hidden="true"></div>
+  <div class="crt-overlay" aria-hidden="true"></div>
+
+  <main class="game-shell">
+    <section id="start-screen" class="screen active start-screen" aria-label="Iniciar experiência">
+      <button id="continue-button" class="arcade-continue image-continue" type="button" aria-label="Clique com o mouse para continuar ao jogo">
+        <img src="assets/images/clique_aqui_para_iniciar_o_jogo.png" alt="Clique com o mouse para continuar ao jogo">
+      </button>
+    </section>
+
+    <section id="intro-screen" class="screen intro-screen" aria-label="Tela de abertura">
+      <div class="intro-sequence">
+        <div class="game-title logo-title logo-glitch" aria-label="Linguagem Quest">
+          <img src="assets/images/logo.png" alt="Linguagem Quest">
+        </div>
+        <p class="intro-line line-one">Dia da Linguagem JOPS</p>
+        <p class="intro-line line-two">Este jogo foi desenvolvido para o Dia da Linguagem JOPS</p>
+        <p class="intro-line line-three">Este jogo foi desenvolvido por Davi Moreira Gonzaga, aluno do Curso Técnico em Informática da E.E.E.P. Professor José Osmar Plácido da Silva. — 2024-2026 — e Desenvolvedor Front-End em Formação.</p>
+        <p class="intro-line line-four">Abraço fraternal à todos os Professores e Mestres da área de Linguagens. Agradecimento especial ao Mestre Gilson por toda a confiança depositada!</p>
+        <p class="intro-line line-five">Prepare-se para testar seus conhecimentos sobre linguagem, música, literatura e interpretação!</p>
+        <p class="github-intro">O projeto desse jogo está disponível no meu GitHub: moreiradv</p>
+      </div>
+    </section>
+
+    <section id="menu-screen" class="screen menu-screen" aria-label="Menu principal">
+      <div class="panel menu-panel">
+        <p class="eyebrow">Dia da Linguagem JOPS</p>
+        <div class="compact-title logo-title logo-title-compact logo-glitch" aria-label="Linguagem Quest">
+          <img src="assets/images/logo.png" alt="Linguagem Quest">
+        </div>
+        <div class="menu-subtitle menu-subtitle-art" aria-label="Press start para encarar 5 fases de linguagem, arte e som">
+          <img src="assets/images/press_start_para_encarar_cinco_crop.png" alt="Press start para encarar 5 fases de linguagem, arte e som">
+        </div>
+
+        <div class="menu-actions">
+          <button id="start-button" class="pixel-button primary-button" type="button">Iniciar jogo</button>
+          <button id="howto-button" class="pixel-button" type="button">Como jogar</button>
+          <button id="teacher-button" class="pixel-button" type="button">Modo professor</button>
+        </div>
+
+        <button id="menu-music-button" class="music-toggle-button" type="button">Tocar música</button>
+
+        <form id="player-form" class="player-form hidden">
+          <label for="player-name">Nome do jogador</label>
+          <div class="player-row">
+            <input id="player-name" type="text" maxlength="24" placeholder="Digite seu nome" autocomplete="name">
+            <button class="pixel-button small-button" type="submit">Começar</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section id="howto-screen" class="screen" aria-label="Como jogar">
+      <div class="panel info-panel">
+        <h2>Como jogar</h2>
+        <ul class="rules-list">
+          <li>O jogador responderá perguntas de múltipla escolha.</li>
+          <li>Algumas perguntas terão música ou áudio.</li>
+          <li>Quando aparecer o botão “Tocar áudio”, o jogador deve ouvir antes de responder.</li>
+          <li>Questões sem música terão 30 segundos de tempo; se o tempo acabar, a questão será anulada e o jogo avançará.</li>
+          <li>Depois de responder, o jogo mostrará se a resposta está correta ou errada.</li>
+          <li>Ao final, será exibida a pontuação e o desempenho.</li>
+        </ul>
+        <button class="pixel-button back-menu-button" type="button">Voltar ao menu</button>
+      </div>
+    </section>
+
+    <section id="quiz-screen" class="screen" aria-label="Tela do quiz">
+      <div class="quiz-layout">
+        <header class="hud">
+          <div>
+            <span class="hud-label">Jogador</span>
+            <strong id="hud-player">---</strong>
+          </div>
+          <div>
+            <span class="hud-label">Pontuação</span>
+            <strong id="score-display">0</strong>
+          </div>
+          <div>
+            <span class="hud-label">Acertos</span>
+            <strong id="percentage-display">0%</strong>
+          </div>
+        </header>
+
+        <div class="progress-wrap" aria-label="Progresso do quiz">
+          <div id="progress-bar" class="progress-bar"></div>
+        </div>
+
+        <article class="panel question-panel">
+          <div class="question-meta">
+            <span id="question-counter" class="chip">Pergunta 1/7</span>
+            <span id="question-category" class="chip neon-chip">Categoria</span>
+            <span id="question-timer" class="chip timer-chip hidden" aria-live="polite">Tempo: 30s</span>
+          </div>
+
+          <h2 id="question-text">Pergunta</h2>
+
+          <div id="audio-controls" class="audio-controls hidden" aria-label="Controles de áudio da pergunta">
+            <button id="play-audio-button" class="pixel-button audio-button" type="button">Tocar áudio</button>
+            <button id="pause-audio-button" class="pixel-button audio-button" type="button">Pausar</button>
+            <button id="restart-audio-button" class="pixel-button audio-button" type="button">Reiniciar áudio</button>
+            <p id="audio-status" class="audio-status" aria-live="polite"></p>
+          </div>
+
+          <div id="options-container" class="options-container"></div>
+
+          <div id="feedback-box" class="feedback-box hidden" aria-live="polite">
+            <h3 id="feedback-title"></h3>
+            <p id="feedback-explanation"></p>
+            <button id="next-button" class="pixel-button primary-button" type="button">Próxima pergunta</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="result-screen" class="screen" aria-label="Resultado final">
+      <div class="panel result-panel">
+        <div id="confetti-layer" class="confetti-layer" aria-hidden="true"></div>
+        <p class="eyebrow">Resultado final</p>
+        <h2 id="result-title">Fim de jogo!</h2>
+        <p id="result-score" class="result-score"></p>
+        <p id="result-message" class="result-message"></p>
+
+        <div class="result-actions">
+          <button id="restart-site-button" class="pixel-button primary-button" type="button">Reiniciar jogo</button>
+          <button id="show-scoreboard-button" class="pixel-button" type="button">Ver placar</button>
+          <button class="pixel-button back-menu-button" type="button">Voltar ao menu</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="scoreboard-screen" class="screen" aria-label="Placar local">
+      <div class="panel scoreboard-panel">
+        <p class="eyebrow">Dia da Linguagem JOPS</p>
+        <h2>Placar</h2>
+        <div class="ranking-box">
+          <h3>Jogadores e pontuações</h3>
+          <ol id="ranking-list" class="ranking-list"></ol>
+        </div>
+        <div class="result-actions">
+          <button id="scoreboard-restart-button" class="pixel-button primary-button" type="button">Reiniciar jogo</button>
+          <button id="clear-scoreboard-button" class="pixel-button danger-button" type="button">Limpar placar</button>
+          <button class="pixel-button back-menu-button" type="button">Voltar ao menu</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="teacher-screen" class="screen" aria-label="Modo professor">
+      <div class="panel teacher-panel">
+        <h2>Modo professor</h2>
+        <p>Para adicionar novas perguntas, edite o array <code>questions</code> no arquivo <code>script.js</code>. Os arquivos de música devem ser colocados na pasta <code>assets/audio/musicas/</code>.</p>
+        <p>Para usar uma música em uma pergunta, escreva <code>audio: "assets/audio/musicas/nome-da-musica.mp3"</code>. Se a pergunta não tiver música, basta não colocar a propriedade <code>audio</code>.</p>
+
+        <div class="examples-grid">
+          <div class="example-card">
+            <h3>1. Pergunta sem áudio</h3>
+            <pre><code>{
+  id: 9,
+  category: "Gramática",
+  question: "Qual alternativa apresenta um verbo?",
+  options: ["Casa", "Correr", "Azul", "Mesa"],
+  correctAnswer: "Correr",
+  explanation: "Correr indica uma ação."
+}</code></pre>
+          </div>
+
+          <div class="example-card">
+            <h3>2. Pergunta com áudio</h3>
+            <pre><code>{
+  id: 10,
+  category: "Música",
+  question: "Qual instrumento se destaca no áudio?",
+  audio: "assets/audio/musicas/nome-da-musica.mp3",
+  options: ["Violão", "Flauta", "Bateria", "Piano"],
+  correctAnswer: "Violão",
+  explanation: "O violão aparece como instrumento principal."
+}</code></pre>
+          </div>
+
+          <div class="example-card">
+            <h3>3. Pergunta estilo ENEM</h3>
+            <pre><code>{
+  id: 11,
+  category: "ENEM",
+  question: "No texto, a crítica social é construída por meio de...",
+  options: ["Ironia", "Rima", "Narrador personagem", "Linguagem técnica"],
+  correctAnswer: "Ironia",
+  explanation: "A ironia contrasta aparência e sentido real."
+}</code></pre>
+          </div>
+
+          <div class="example-card">
+            <h3>4. Pergunta sobre música</h3>
+            <pre><code>{
+  id: 12,
+  category: "Estilos musicais",
+  question: "Qual estilo valoriza improviso, rima e ritmo falado?",
+  options: ["Rap", "Samba", "Bossa nova", "Forró"],
+  correctAnswer: "Rap",
+  explanation: "O rap usa flow, rima e expressão oral."
+}</code></pre>
+          </div>
+        </div>
+
+        <button class="pixel-button back-menu-button" type="button">Voltar ao menu</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
